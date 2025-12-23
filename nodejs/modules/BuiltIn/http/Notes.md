@@ -1,0 +1,4 @@
+- Default message is ok and status code is 200.
+- default content type is 'plain/text'
+- setHeader will be before writehead. by using this we can pass the own header.
+- node --watch filename is used to continuous 
