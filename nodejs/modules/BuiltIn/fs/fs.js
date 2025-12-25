@@ -86,11 +86,11 @@ console.log(content);
 //! recursive : true --> this will recursively call the function until the structure is created, by default it is set to false.
 
 //! create this folder structure -> backend/controller/user.js
-function createStructure() {
-  fs.mkdirSync("./backend");
-  fs.mkdirSync("./backend/controller");
-  fs.writeFileSync("./backend/controller/user.js", "let a  = 20");
-}
+// function createStructure() {
+//   fs.mkdirSync("./backend");
+//   fs.mkdirSync("./backend/controller");
+//   fs.writeFileSync("./backend/controller/user.js", "let a  = 20");
+// }
 
 // createStructure();
 
