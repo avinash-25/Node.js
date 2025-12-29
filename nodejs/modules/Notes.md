@@ -1,6 +1,4 @@
 
-
-
 ## Modules
 
 - It is piece of code, which can be reused in other files.
@@ -17,6 +15,8 @@
 2. ES modules
    - import and export
 
+
+![1766999334874](image/Notes/1766999334874.png)
 
 export or module.exports --> we make the code avaliable for other files
 import or require --> we use the code exported from other files
