@@ -1,24 +1,10 @@
 import express from 'express';
 import fs from 'fs';
+import { arr } from './db.js';
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
-
-let arr = [
-    {   id:1,
-        name: "Avinash",
-        age: 23,
-    },
-    {   id:2,
-        name: "Raju",
-        age: 25,    
-    },
-    {   id:3,
-        name: "Rakesh",
-        age: 26,    
-    }
-]
 
 app.get("/", (req, res) => {
     res.send(arr);
@@ -49,14 +35,14 @@ app.post("/add", (req, res) => {
 
 
 app.get("/user/:id", (req, res) => {
-    let id = req.params.id;
+    let id = Number(req.params.id);
 
-    let user = arr.find((user) => {
-        id === user.id;
-        console.log(user);
-        res.send(user);
-    })
+    const user = arr.find((user) => user.id === id);
+    
+    if (!user) res.status(404).send("User Not Found");
 
+    console.log(user);
+    res.send(user);
 })
 
 
@@ -65,3 +51,6 @@ app.listen(9000, (err) => {
     if (err) console.log("Error : ", err);
     console.log("Server is running");
 })
+
+//? using form-enode : we can send only alpphabaets 
+//? using form :  we can send text as well as media alos like media and pdf.
