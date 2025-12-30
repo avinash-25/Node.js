@@ -4,6 +4,8 @@ import { arr } from './db.js';
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 
 
 //& check server
@@ -48,9 +50,9 @@ app.get("/one/:id", (req, res) => {
 
 //& delete one user
 app.delete("/one/delete/:id", (req, res) => {
-  let userId = req.params.id;
+  let userId = parseInt(req.params.id);
 
-  let idx = arr.findIndex((user) => user.id === parseInt(userId));
+  let idx = arr.findIndex((user) => user.id === userId);
 
   if (idx !== -1) {
     arr.splice(idx, 1);
@@ -69,9 +71,35 @@ app.delete("/one/delete/:id", (req, res) => {
 });
 
 //& update user details
-app.patch("/update", (req, res) => {
-  
-})
+app.patch("/update/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const user = arr.find(user => user.id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found"
+    });
+  }
+
+  const { name, age } = req.body;
+
+  if (name !== undefined) {
+    user.name = name;
+  }
+
+  if (age !== undefined) {
+    user.age = age;
+  }
+
+  res.json({
+    success: true,
+    message: "User updated successfully",
+    data: user
+  });
+});
+
 
 //
 app.listen(9000, () => {
