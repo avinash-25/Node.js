@@ -1,40 +1,8 @@
-import express from 'express';
-import { arr } from './db.js';
-
-const app = express();
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+import { arr } from "../config/db.js";
 
 
-
-//& check server
-app.get("/", (req, res) => {
-    res.json({
-        success: true,
-        message: "Hello"
-    })
-})
-
-//& Get all users
-app.get("/users", (req, res) => {
-    res.send(arr);
-})
-
-
-//& Add user
-app.post("/register", (req, res) => {
-    const user = req.body;
-
-    arr.push(user);
-    res.status(201).json({
-        success: true,
-        message: "Registered successfully"
-    })
-})
-
-//& get one user
-app.get("/one/:id", (req, res) => {
+//* get single user
+export const getSignleUser = (req, res) => {
     const id = Number(req.params.id);
 
     const user = arr.find((user) => id === user.id);
@@ -45,11 +13,27 @@ app.get("/one/:id", (req, res) => {
         message: "user fetched successfully",
         data: user
     })
-})
+}
 
+//* Get all user
+export const getAllUser = (req, res) => {
+    res.send(arr);
+}
 
-//& delete one user
-app.delete("/one/delete/:id", (req, res) => {
+//* Register User
+
+export const registerUser = (req, res) => {
+    const user = req.body;
+
+    arr.push(user);
+    res.status(201).json({
+        success: true,
+        message: "Registered successfully"
+    })
+}
+
+//* delete single user
+export const deleteUser = (req, res) => {
   let userId = parseInt(req.params.id);
 
   let idx = arr.findIndex((user) => user.id === userId);
@@ -68,10 +52,10 @@ app.delete("/one/delete/:id", (req, res) => {
       message: "No user found",
     });
   }
-});
+}
 
-//& update user details
-app.patch("/update/:id", (req, res) => {
+//* Update user details
+export const updateUser =  (req, res) => {
   const id = parseInt(req.params.id);
 
   const user = arr.find(user => user.id === id);
@@ -98,10 +82,8 @@ app.patch("/update/:id", (req, res) => {
     message: "User updated successfully",
     data: user
   });
-});
+}
 
 
-//
-app.listen(9000, () => {
-    console.log("Server started at 9000")
-})
+//? using puth if we apdete one thing only then rest of the details willl washed out it means previous details will be deleted and new details will be added
+//? So we use patch for partial update
