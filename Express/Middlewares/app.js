@@ -1,6 +1,9 @@
 import express from "express";
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors());
 
 app.use((req, res, next) => {
   req.myName = "varun";
@@ -42,3 +45,4 @@ app.listen(9000, (err) => {
 //? 3) global middlewares
 //? 4) router middlewares
 //? 5) error middlewares
+//? 6) Third party error middlewares.

@@ -1,17 +1,20 @@
 {
-  "name": "mvc",
+  "name": "user_registration",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "description": "",
   "dependencies": {
-    "express": "^5.2.1"
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "mongoose": "^8.20.0",
+    "session": "^0.1.0"
   }
 }
