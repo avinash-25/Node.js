@@ -38,7 +38,8 @@ let userSchema = new mongoose.Schema(
         }
     },
     {
-        timestamps: true
+    versionKey: false, //! to remove __v field
+    timestamps: true, // it adds createdAt and updatedAt fields
     });
 /**
  * first one is definition and second one is options
@@ -46,8 +47,8 @@ let userSchema = new mongoose.Schema(
 
 let userModel = mongoose.model("User", userSchema);
 
-//? model("collectionname", "schema") takes two argument, collection-name and Schema, it will convert the schema into mongodb collection.
-//~ 
+//? model("collectionName", "schema") takes two argument, collection-name and schema, it will convert the schema into mongodb collection
+//~ the collection name will be (lowercase + plural) -> users
 
 export default userModel;
 

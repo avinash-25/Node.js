@@ -1,3 +1,9 @@
+//! 1) import {Router} from 'express'
+//! 2) import all the controller functions
+//! 3) create an instance of Router
+//! 4) define all the routes and attach the controller functions
+//! 5) export the router instance
+
 import Router from 'express';
 import { deleteUser, getuser, getusers, register, updateUser } from '../controllers/user.controller.js';
 
