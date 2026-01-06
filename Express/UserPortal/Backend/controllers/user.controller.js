@@ -1,19 +1,78 @@
 import userModel from "../models/user.model.js";
+import {errorMiddleware}  from "../middlewares/error.middleware.js";
 
 //^ Register user
-export const register = async (req,res) => {
-    const { name, age, email, isMarried, password } = req.body;
-    const newUser = await userModel.create({ name, age, email, isMarried, password }); // create method returns the data whatever we inserted.
+export const register = async (req,res, next) => {
+   try {
+     const { name, age, isMarried, email, password } = req.body;
+    const newUser = await userModel.create({ name, age, isMarried, email,  password }); // create method returns the data whatever we inserted.
 
     res.status(201).json({
         success: true,
         message: "User registered Successfully",
         data: newUser
     })
+   } catch (error) {
+       next(error);
+   }
 };
 
-export const getuser = async () => { };
-export const getusers = async () => { };
+//^ Get single user
+export const getUsers = async (req, res, next) => { 
+    try {
+        let allUsers = await userModel.find();
+        res.status(200).json({
+            success: true,
+            message: "Users Fetched Successfully",
+            data: allUsers
+        })
+    } catch (error) {
+        next(error);
+    }
+};
 
-export const updateUser = async () => { };
+//^ Get single User
+export const getUser = async (req, res, next) => {
+ try {
+       const userId = req.params.id;
+    let user = await userModel.findOne({ _id: userId });
+
+    if (!user) return res.status(404).json({
+        success: false,
+        message: "User Not Found"
+    })
+
+    res.status(200).json({
+        success: true,
+        message: "User Fetched",
+        data: user
+    })
+ } catch (error) {
+     next(error);
+ }
+
+ };
+
+//^ Update single user
+export const updateUser = async (req, res, next) => { 
+    try {
+        let userId = req.params.id;
+
+        let updatedUser = await userModel.findByIdAndUpdate(userId, req.body, {new: true});
+
+        if (!updatedUser) return res.status(404).json({
+            success: false,
+            message: "User Not Found"
+        })
+
+        res.status(200).json({
+        success: true,
+        message: "User Updated",
+        data: updatedUser
+    })
+
+    } catch (error) {
+        next(error);
+    }
+};
 export const deleteUser = async () => { };

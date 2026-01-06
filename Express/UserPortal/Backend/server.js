@@ -6,9 +6,10 @@ const app = express();
 
 connectDB();
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use("/user", router);
+app.use("/users", router);
 
 app.listen(9000, () => {
     console.log("Server is running at 9000");
