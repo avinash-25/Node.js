@@ -1,23 +1,25 @@
 import userModel from "../models/user.model.js";
-import {errorMiddleware}  from "../middlewares/error.middleware.js";
+import { userRegisterSchema } from "../validators/user.validators.js";
 
-//^ Register user
+//* Register user
 export const register = async (req,res, next) => {
-   try {
-     const { name, age, isMarried, email, password } = req.body;
-    const newUser = await userModel.create({ name, age, isMarried, email,  password }); // create method returns the data whatever we inserted.
+    try {
+        let { error, value } = userRegisterSchema.validate(req.body);
+        
+        const { name, age, isMarried, email, password } = req.body;
+        const newUser = await userModel.create({ name, age, isMarried, email,  password }); // create method returns the data whatever we inserted.
 
-    res.status(201).json({
-        success: true,
-        message: "User registered Successfully",
-        data: newUser
-    })
-   } catch (error) {
-       next(error);
-   }
+        res.status(201).json({
+            success: true,
+            message: "User registered Successfully",
+            data: newUser
+        })
+        } catch (error) {
+            next(error);
+        }
 };
 
-//^ Get single user
+//* Get single user
 export const getUsers = async (req, res, next) => { 
     try {
         let allUsers = await userModel.find();
@@ -31,7 +33,7 @@ export const getUsers = async (req, res, next) => {
     }
 };
 
-//^ Get single User
+//* Get single User
 export const getUser = async (req, res, next) => {
  try {
        const userId = req.params.id;
@@ -53,12 +55,12 @@ export const getUser = async (req, res, next) => {
 
  };
 
-//^ Update single user
+//* Update single user
 export const updateUser = async (req, res, next) => { 
     try {
         let userId = req.params.id;
 
-        let updatedUser = await userModel.findByIdAndUpdate(userId, req.body, {new: true});
+        let updatedUser = await userModel.findByIdAndUpdate(userId, req.body, {new: true, runValidators: true});
 
         if (!updatedUser) return res.status(404).json({
             success: false,
@@ -75,4 +77,26 @@ export const updateUser = async (req, res, next) => {
         next(error);
     }
 };
-export const deleteUser = async () => { };
+
+//* Delete user
+export const deleteUser = async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+
+    const deletedUser = await userModel.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+        return res.status(404).json({
+            success: false,
+            message: "User not found"
+        })
+    }
+    res.status(200).json({
+        success: true,
+        message: "User deleted",
+        data: deletedUser
+        })
+    } catch (error) {
+        next(error)
+    }
+ };

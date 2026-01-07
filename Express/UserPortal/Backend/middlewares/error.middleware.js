@@ -29,6 +29,9 @@ export const errorMiddleware = (err, req, res, next) => {
 }
 
 
-//? define a errorMiddleware function, with four parameters (err, req, res, next)
-//? use this errorMiddleware in the entry file, inside app,use(errorMiddleware)
-//? the location of app.use
+//! define a errorMiddleware function, with four parameters (err, req, res, next)
+//! use this errorMiddleware in the entry file, inside app.use(errorMiddleware),
+//! the location of app.use(errorMiddleware) is very important --> it should be after all the routes or above listen method
+
+//? use trycatch block to handle errors, in catch block, call next(error)
+//? next(error) ==> this will call the errorHandler middleware by passing the error object to the middleware where we can handle the error gracefully

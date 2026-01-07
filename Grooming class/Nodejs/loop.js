@@ -215,24 +215,111 @@ Promise.resolve().then(() => {
 
 */
 
+
+//~ ================================================================================================================
+
+
+/*
+setTimeout(() => {
+  console.log("st1");
+}, 0);
+
+setTimeout(() => {
+  console.log("st2");
+  process.nextTick(() => console.log("nt1"));
+}, 0);
+
+setTimeout(() => {
+  console.log("st3");
+}, 0);
+
+process.nextTick(() => {
+  console.log("nt2");
+});
+
+process.nextTick(() => {
+  console.log("nt3");
+  process.nextTick(() => console.log("nt4"));
+});
+
+process.nextTick(() => {
+  console.log("nt5");
+});
+
+Promise.resolve().then(() => {
+  console.log("p1");
+});
+
+Promise.resolve().then(() => {
+  console.log("p2");
+  process.nextTick(() => console.log("nt6"));
+});
+
+Promise.resolve().then(() => {
+  console.log("p3");
+});
+
+*/
+
 //& Callbacks in microtask queues are executed in between the execution of callbacks in the timer queue
 
-console.log("Start")
+//~ =======================================================================================
+// index.js
+// const fs = require("fs");
+// import fs from "fs";
 
-console.time("timer");
+// fs.readFile(__filename, () => {
+//   console.log("this is readFile 1");
+// });
 
-let rawData = await fetch("https://jsonplaceholder.typicode.com/users");
+// process.nextTick(() => console.log("this is process.nextTick 1"));
+
+// Promise.resolve().then(() => console.log("this is Promise.resolve 1"));
+
+//~ =======================================================================================
+
+// fs.readFile(import.meta.filename, () => {
+//   console.log("this is readFile 1");
+// });
+
+// setTimeout(() => {
+//   console.log("st1");
+// }, 0);
+
+//? delay is not 0 millisecond (the internal implementation of setTimeout() code takes the delay as MAX(input,1))
+//! so the delay is never 0 ms, it is set to the minimum value i.e, 1 ms
+
+
+
+// console.log("Start")
+
+// console.time("timer");
+
+// let rawData = await fetch("https://jsonplaceholder.typicode.com/users");
 
 // console.timeEnd("timer");
 
 // console.time("timer");
 
-const data = await rawData.json()
+// const data = await rawData.json()
 
-console.timeEnd("timer");
+// console.timeEnd("timer");
 
-console.log("data")
+// console.log("data")
 
-console.log("End")
+// console.log("End")
 
+//~ ===========================================================================
 
+// const fs = require("fs");
+
+// fs.readFile(__filename, () => {
+//   console.log("this is readFile 1");
+// });
+
+// process.nextTick(() => console.log("this is process.nextTick 1"));
+// Promise.resolve().then(() => console.log("this is Promise.resolve 1"));
+// setTimeout(() => console.log("this is setTimeout 1"), 0);
+// setImmediate(() => console.log("this is setImmediate 1"));
+
+// for (let i = 0; i < 2000000000; i++) {}
