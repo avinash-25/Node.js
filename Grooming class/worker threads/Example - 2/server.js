@@ -6,7 +6,7 @@ const app = express();
 app.get("/blocking", (req, res) => {
   let startTime = Date.now();
 
-  let worker = new Worker("./worker.js"); //! creating an instance of Worker class (a worker thread is created)
+  let worker = new Worker("./worker.js"); //* creating an instance of Worker class (a worker thread is created)
 
   //? listening to the message event, which is emitted by worker thread once the task is completed
   worker.on("message", (data) => {
