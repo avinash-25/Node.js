@@ -8,9 +8,11 @@ import Router from 'express';
 import { deleteUser, getUser, getUsers, register, updateUser } from '../controllers/user.controller.js';
 import { validateBody } from '../middlewares/validate.middleware.js';
 import { updateUserSchema, userRegisterSchema } from '../validators/user.validators.js';
+import { login } from '../utils/jwt.utils.js';
 
 const router = Router();
 
+router.post("/login",login);
 router.post("/register", validateBody(userRegisterSchema), register);
 router.get("/all", getUsers);
 router.get("/single/:id", getUser);

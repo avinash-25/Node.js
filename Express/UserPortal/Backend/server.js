@@ -14,17 +14,37 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-app.use("/users", router);
+app.use("/user", router);
 app.use(errorMiddleware);
 
 
 app.listen(process.env.PORT, () => {
-    console.log("Server is running at 9000");
+    console.log(`Server is running at ${process.env.PORT}`);
 })
 
 
 
-//? while using default script, in the terminal, run "npm scriptName"
-//? while using custom script, in the terminal, run "npm run scriptName"
+//^ while using default script, in the terminal, run "npm scriptName"
+//^ while using custom script, in the terminal, run "npm run scriptName"
 
-//? open cmd as admin, run "net start mongodb"
+//! open cmd as admin, run "net start mongodb"
+
+//! zero dependency packages : packages which are not depended on any other package
+
+//! req(readable stream, mainly properties(url, body, cookies, etc..)) and res(writable stream) are objects(streams, mainly methods(json, send, status, etc..))
+
+//   "version": "1.0.0"
+//? right digit --> minor fixes, patchworks
+//? middle digit --> a fewer upgrades
+//? left digit --> major update
+
+//? http://localhost:9000/apiVersion/endpoint
+//? protocol://domainName:portNumber/apiVersion/endpoint
+
+//! API --> application programming interface.
+//? it is an interface that allows to software to communicate with each other.
+
+//~ RESTFUL Api's --> any api is an restful api if it follows rest architecture (REPRESENTATIONAL STATE TRANSFER)
+//? 1) stateless : the server does not store any data, each req is independent of each other
+//? 2) api's are resource based URL (/register, /all, /login)
+//? 3) api's are built using HTTP methods

@@ -41,3 +41,34 @@
 3. create a databse with the help of db("databaseName)
 4. create a collection with the help of createCollection("collectionName)
 
+
+
+## Authentication
+
+1. Basuc authenticatiobn
+   - In every request we send creentials
+
+2. Session storage (enter oncce emailid and password)
+   - saved to two place db and browsers
+   - server generates sessionID
+   - Dleted after logout
+   - not scalabale
+
+3. JWT
+   - give emailid and password at oncce
+   - generates token 
+   - token not saved to db stored at client side
+   - token have three thiongs(header, payload, signature)
+   - server gerates another token on the basis of payload
+
+4. Oauth
+   - authentication is possible using third party services
+
+5. Oauth 2.0
+   - here we are not sharing our credentials.
+   - fake emil and password stored
+
+- JWT and Oauth2.0 are are widely used
+- Api key authenticatiobn used betweeb two server.
+
+

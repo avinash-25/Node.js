@@ -1,9 +1,11 @@
 import userModel from "../models/user.model.js";
 import ErrorResponse from "../utils/ErrorResponse.utils.js";
+import asyncHandler from 'express-async-handler';
+import jwt from 'jsonwebtoken';
 
 //* Register user
-export const register = async (req,res, next) => {
-    try {
+export const register = asyncHandler(
+    async (req, res, next) => {
         const { name, age, isMarried, email, password } = req.body;
         const newUser = await userModel.create({ name, age, isMarried, email,  password }); // create method returns the data whatever we inserted.
 
@@ -12,14 +14,11 @@ export const register = async (req,res, next) => {
             message: "User registered Successfully",
             data: newUser
         })
-        } catch (error) {
-            next(error);
-        }
-};
+})
 
 //* Get all user
-export const getUsers = async (req, res, next) => { 
-    try {
+export const getUsers = asyncHandler(
+    async (req, res, next) => { 
         let allUsers = await userModel.find();
         if (allUsers.length == 0) {
             throw new ErrorResponse("No users Found", 404);
@@ -29,14 +28,11 @@ export const getUsers = async (req, res, next) => {
             message: "Users Fetched Successfully",
             data: allUsers
         })
-    } catch (error) {
-        next(error);
-    }
-};
+})
 
 //* Get single User
-export const getUser = async (req, res, next) => {
- try {
+export const getUser = asyncHandler(
+    async (req, res, next) => {
        const userId = req.params.id;
      let user = await userModel.findOne({ _id: userId });
      
@@ -47,15 +43,11 @@ export const getUser = async (req, res, next) => {
         message: "User Fetched",
         data: user
     })
- } catch (error) {
-     next(error);
- }
-
- };
+ })
 
 //* Update single user
-export const updateUser = async (req, res, next) => { 
-    try {
+export const updateUser = asyncHandler(
+    async (req, res, next) => { 
         let userId = req.params.id;
 
         let updatedUser = await userModel.findByIdAndUpdate(userId, req.body, {new: true, runValidators: true});
@@ -66,16 +58,12 @@ export const updateUser = async (req, res, next) => {
         success: true,
         message: "User Updated",
         data: updatedUser
+        })
     })
 
-    } catch (error) {
-        next(error);
-    }
-};
-
 //* Delete user
-export const deleteUser = async (req, res, next) => {
-    try {
+export const deleteUser = asyncHandler(
+    async (req, res, next) => {
     const userId = req.params.id;
 
     const deletedUser = await userModel.findByIdAndDelete(userId);
@@ -87,7 +75,6 @@ export const deleteUser = async (req, res, next) => {
         message: "User deleted",
         data: deletedUser
         })
-    } catch (error) {
-        next(error)
-    }
- };
+    })
+ 
+

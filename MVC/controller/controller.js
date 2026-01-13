@@ -85,5 +85,5 @@ export const updateUser =  (req, res) => {
 }
 
 
-//? using puth if we apdete one thing only then rest of the details willl washed out it means previous details will be deleted and new details will be added
+//? using put if we update one thing only then rest of the details will washed out it means previous details will be deleted and new details will be added
 //? So we use patch for partial update
