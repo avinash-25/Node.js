@@ -12,13 +12,21 @@ import { authenticate } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
-router.post("/login",login);
+
+
 router.post("/register", validateBody(userRegisterSchema), register);
-router.get("/all", authenticate, getUsers);
-router.get("/single/:id", getUser);
-router.patch("/update/:id", validateBody(updateUserSchema), updateUser);
-router.delete("/delete/:id", deleteUser);
+
+router.post("/login", login);
+
 router.post("/logout", logout);
+
+router.get("/all", authenticate, getUsers);
+
+router.get("/single/:id", getUser);
+
+router.patch("/update/:id", validateBody(updateUserSchema), updateUser);
+
+router.delete("/delete/:id", deleteUser);
 
 router.get("/profile", authenticate, getProfile);
 
