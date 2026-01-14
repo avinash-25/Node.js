@@ -5,6 +5,7 @@ import { errorMiddleware } from './middlewares/error.middleware.js';
 import dotenv from 'dotenv';
 dotenv.config({quiet: true}); // this will read/parse the variables present in .env file.    
 //this should be on the top of the file. It loads all the variables defiened in .env file into process.env
+import cookieParser from 'cookie-parser'
 
 const app = express();
 
@@ -12,6 +13,7 @@ connectDB();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 
 app.use("/user", router);

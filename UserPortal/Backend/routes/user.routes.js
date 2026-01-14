@@ -5,18 +5,21 @@
 //! 5) export the router instance
 
 import Router from 'express';
-import { deleteUser, getUser, getUsers, register, updateUser } from '../controllers/user.controller.js';
+import { deleteUser, getProfile, getUser, getUsers, login, logout, register, updateUser } from '../controllers/user.controller.js';
 import { validateBody } from '../middlewares/validate.middleware.js';
 import { updateUserSchema, userRegisterSchema } from '../validators/user.validators.js';
-import { login } from '../utils/jwt.utils.js';
+import { authenticate } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
 router.post("/login",login);
 router.post("/register", validateBody(userRegisterSchema), register);
-router.get("/all", getUsers);
+router.get("/all", authenticate, getUsers);
 router.get("/single/:id", getUser);
 router.patch("/update/:id", validateBody(updateUserSchema), updateUser);
 router.delete("/delete/:id", deleteUser);
+router.post("/logout", logout);
+
+router.get("/profile", authenticate, getProfilek);
 
 export default router;
