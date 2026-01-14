@@ -1,33 +1,26 @@
-export const errorMiddleware = (err, req, res, next) => {
+//! error middleware
+export const errorHandler = (err, req, res, next) => {
+  //! short circuiting
+  err.message = err.message || "Something went wrong";
+  err.statusCode = err.statusCode || 500;
 
-    // short circuting
-    err.message = err.message || "Something went wrong";
-    err.statusCode = err.statusCode || 500;
+  if (err.name === "ValidationError") {
+    err.statusCode = 400;
+    err.message = "SOmething is missing";
+  } else if (err.code === 11000) {
+    err.statusCode = 409;
+    err.message = "already exists";
+  } else if (err.name === "CastError") {
+    err.statusCode = 404;
+    err.message = "Invalid id";
+  }
 
-
-    if (err.name == "ValidationError") {
-        res.status(400).json({ success: false, message: err.message })
-        err.statusCode = 400;
-        err.message = "Something is missing"
-    }
-    else if (err.code == 11000) {
-        res.status(409).json({ success: false, message: err.message })
-        err.statusCode = 409;
-        err.message = "Already exist"
-    }
-    else if (err.message == "CastError") {
-        res.status(409).json({ success: false, message: err.message })
-        err.statusCode = 404;
-        err.message = "Invalid ID"
-    }
-
-
-    res.status(err.statusCode).json({
-        success: false,
-        message: err.message
-    })
-}
-
+  res.status(err.statusCode).json({
+    success: false,
+    message: err.message,
+    errObject: err,
+  });
+};
 
 //! define a errorMiddleware function, with four parameters (err, req, res, next)
 //! use this errorMiddleware in the entry file, inside app.use(errorMiddleware),

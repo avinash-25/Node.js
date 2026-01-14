@@ -20,6 +20,6 @@ router.patch("/update/:id", validateBody(updateUserSchema), updateUser);
 router.delete("/delete/:id", deleteUser);
 router.post("/logout", logout);
 
-router.get("/profile", authenticate, getProfilek);
+router.get("/profile", authenticate, getProfile);
 
 export default router;

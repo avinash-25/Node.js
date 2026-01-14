@@ -1,23 +1,24 @@
-import userModel from "../models/user.model.js";
+
 import ErrorResponse from "../utils/ErrorResponse.utils.js";
-import jwt from 'jwt';
+import jwt from "jsonwebtoken";
+import { JWT_SECRET_KEY } from "../config/index.js";
 
 export const authenticate = async (req, res, next) => {
-    console.log(req.cookies);
+  let token = req.cookies.token;
+  if (!token)
+    return next(new ErrorResponse("Please Login to access this resource", 401)); //? unauthorized
 
-    let token = req.cookies.token;
-    if (!token) return next(new ErrorResponse("Please Login", 401));
+  let decodedToken = jwt.verify(token, JWT_SECRET_KEY);
+  console.log("decodedToken: ", decodedToken); //? {iat:, exp:, id:"12bytes"}
 
-    let decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log("Decoded token : ", decodedToken);
+  let user = await UserModel.findOne({ name: decodedToken.name });
+  if (!user) return next(new ErrorResponse("Invalid Session", 401));
 
-    let myUser = await userModel.findOne({ name: decodedToken });
-    if (!myUser) return next(new ErrorResponse("Invalid session", 401));
+  req.myUser = user;
+  next();
+};
 
-    req.myUser = myUser;
-    next();
-    
-}
+//! encryption, encoding, signing(data integrity)
 
 // 403 : we cant access whatever you are login or not
 // 401 : unt=authorized access
