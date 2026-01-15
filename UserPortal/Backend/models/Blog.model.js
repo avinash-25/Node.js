@@ -15,7 +15,6 @@ const blogSchema = new mongoose.Schema(
         },
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
             ref: "User" // perform lookup .. same as join in sql
         },
         image: {
