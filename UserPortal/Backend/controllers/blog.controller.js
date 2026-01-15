@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import BlogModel from '../models/Blog.model.js';
+import ErrorResponse from '../utils/ErrorResponse.utils.js';
 
 //* Add blog
 export const addBlog = asyncHandler(async (req, res, next) => {
@@ -18,6 +19,31 @@ export const addBlog = asyncHandler(async (req, res, next) => {
   });
 });
 
-export const getBlogs = asyncHandler(async (req, res, next) => {});
 
-export const getBlog = asyncHandler(async (req, res, next) => {});
+//* get all blogs
+export const getBlogs = asyncHandler(async (req, res, next) => {
+  let blog = await BlogModel.find();
+  if (blog.length == 0) throw new ErrorResponse("No users found", 404);
+  
+  res.status(200).json({
+    success: true,
+    message: "All users fetched",
+    payload: blog
+  })
+});
+
+
+//* get single blog
+export const getBlog = asyncHandler(async (req, res, next) => {
+  const blogId = req.params.id;
+  
+  if (!blogId) throw new ErrorResponse("Invalid id", 404);
+
+  const blog = await BlogModel.findById(blogId);
+
+  res.status(200).json({
+    success: true,
+    message: "Successfully fetched",
+    blog: blog
+  })
+});

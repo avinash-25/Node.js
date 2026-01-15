@@ -4,6 +4,7 @@ import UserModel from '../models/user.model.js';
 import generateJwtToken from '../utils/jwt.utils.js'
 
 
+
 //* Register 
 export const register = asyncHandler(async (req, res, next) => {
   const { name, age, email, isMarried, password } = req.body;
