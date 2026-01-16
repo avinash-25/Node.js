@@ -1,13 +1,16 @@
 import asyncHandler from 'express-async-handler';
 import BlogModel from '../models/Blog.model.js';
 import ErrorResponse from '../utils/ErrorResponse.utils.js';
+import { uploadImage } from '../utils/cloudinary.utils.js';
 
 //* Add blog
 export const addBlog = asyncHandler(async (req, res, next) => {
-    console.log(req.file);
+  // console.log(req.file);
+  let {secure_url} = await uploadImage(req?.file?.path);
+  // console.log(result);
   const { title, description, category, tags } = req.body;
 
-  let newBlog = await BlogModel.create({ title, description, category, tags });
+  let newBlog = await BlogModel.create({ title, description, category, tags, image: secure_url });
 
   //   let newBlog = new BlogModel({ title, description, category, tags });
   //   let savedBlog = await newBlog.save();

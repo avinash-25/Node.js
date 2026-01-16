@@ -19,6 +19,7 @@ export const errorHandler = (err, req, res, next) => {
     success: false,
     message: err.message,
     errObject: err,
+    errline:err.stack
   });
 };
 

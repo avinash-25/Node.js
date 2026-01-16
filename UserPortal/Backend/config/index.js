@@ -6,3 +6,6 @@ export const PORT = process.env.PORT || 9000;
 export const MONGODB_URL = process.env.MONGODB_URL;
 
 export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+export const CLOUDINARY_CLOUD_KEY = process.env.CLOUDINARY_CLOUD_KEY;
+export const CLOUDINARY_API_SECRET=process.env.CLOUDINARY_API_SECRET
+export const CLOUDINARY_CLOUD_NAME=process.env.CLOUDINARY_CLOUD_NAME
