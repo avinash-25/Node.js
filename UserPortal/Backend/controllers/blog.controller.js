@@ -5,16 +5,21 @@ import { uploadImage } from '../utils/cloudinary.utils.js';
 
 //* Add blog
 export const addBlog = asyncHandler(async (req, res, next) => {
-  // console.log(req.file);
-  let {secure_url} = await uploadImage(req?.file?.path);
-  // console.log(result);
   const { title, description, category, tags } = req.body;
+  let secure_url = "";
+  
+  if (req.file) {
+    let resp = await uploadImage(req?.file?.path);
+    secure_url = resp?.secure_url;
+  }
 
-  let newBlog = await BlogModel.create({ title, description, category, tags, image: secure_url });
-
-  //   let newBlog = new BlogModel({ title, description, category, tags });
-  //   let savedBlog = await newBlog.save();
-  //   console.log("savedBlog: ", savedBlog);
+  let newBlog = await BlogModel.create({
+    title,
+    description,
+    category,
+    tags,
+    image: secure_url || "",
+  });
 
   res.status(201).json({
     success: true,

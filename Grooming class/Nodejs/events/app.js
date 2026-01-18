@@ -11,13 +11,13 @@ let event = new EventEmitter();
 
 event.on("hi", () => {
     console.log("hi event is triggered");
-})
+});
 
 event.on("hello", () => {
     console.log("hi event is triggered");
-})
+});
 
-event.emit("hi") // created an event with the name as "hi"
+event.emit("hi");// created an event with the name as "hi"
 event.emit("hello");
 
 console.log("hi");
