@@ -4,7 +4,7 @@ import multer from "multer";
 
 const myStorage = multer.diskStorage({
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "----" + file.originalname);
+    cb(null, Date.now() + "--" + file.originalname);
     }, //? in your server, this will be the name of the file
     
   destination: function (req, file, cb) {
