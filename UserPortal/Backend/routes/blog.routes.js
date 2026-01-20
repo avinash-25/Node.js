@@ -2,7 +2,7 @@ import { Router } from "express";
 import { addBlog, getBlog, getBlogs } from "../controllers/blog.controller.js";
 import { addBlogSchema } from "../validators/blog.validator.js";
 import { validateBody } from "../middlewares/validate.middleware.js";
-import upload from "../middlewares/multer.middleware.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 

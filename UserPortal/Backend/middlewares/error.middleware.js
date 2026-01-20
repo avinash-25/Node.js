@@ -7,12 +7,23 @@ export const errorHandler = (err, req, res, next) => {
   if (err.name === "ValidationError") {
     err.statusCode = 400;
     err.message = err.message; //`${Object.values(err.errors)}`;
+
   } else if (err.code === 11000) {
+    
+    let key = Object.keys(err);
+    key = key[0].toUpperCase();
     err.statusCode = 409;
-    err.message = "already exists";
+    err.message = `${key} already exist`;
+
   } else if (err.name === "CastError") {
     err.statusCode = 404;
-    err.message = "Invalid id";
+    err.message = `Invalid ${err.path}: ${err.value}`;
+
+  } else if (err.name === "MulterError") {
+    if (err.code = "LIMIT_UNEXPECTED_FILE") {
+      err.statusCode = 400;
+      err.message = "You can add only one image at a time";
+    }
   }
 
   res.status(err.statusCode).json({
@@ -29,35 +40,3 @@ export const errorHandler = (err, req, res, next) => {
 
 //? use trycatch block to handle errors, in catch block, call next(error)
 //? next(error) ==> this will call the errorHandler middleware by passing the error object to the middleware where we can handle the error gracefully
-
-let errObject = {
-  errors: {
-    category: {
-      name: "ValidatorError",
-      message: "`abc` is not a valid enum value for path `category`.",
-      properties: {
-        message: "`abc` is not a valid enum value for path `category`.",
-        type: "enum",
-        enumValues: [
-          "science",
-          "education",
-          "sports",
-          "gaming",
-          "books",
-          "foods",
-          "travel",
-        ],
-        path: "category",
-        value: "abc",
-        length: 3,
-      },
-      kind: "enum",
-      path: "category",
-      value: "abc",
-    },
-  },
-  _message: "Blog validation failed",
-  statusCode: 400,
-  name: "ValidationError",
-  message: "SOmething is missing",
-};

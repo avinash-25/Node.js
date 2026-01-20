@@ -3,11 +3,15 @@ import BlogModel from '../models/Blog.model.js';
 import ErrorResponse from '../utils/ErrorResponse.utils.js';
 import { uploadImage } from '../utils/cloudinary.utils.js';
 
+
+export const addImage = asyncHandler(async (req,res,next) =>{})
+
+
 //* Add blog
 export const addBlog = asyncHandler(async (req, res, next) => {
   const { title, description, category, tags } = req.body;
+  const userId = req.myUser._id;
   let secure_url = "";
-  
   if (req.file) {
     let resp = await uploadImage(req?.file?.path);
     secure_url = resp?.secure_url;
@@ -19,7 +23,24 @@ export const addBlog = asyncHandler(async (req, res, next) => {
     category,
     tags,
     image: secure_url || "",
+    createdBy: userId,
   });
+
+  await UserModel.updateOne(
+    { _id: userId },
+    {
+      $inc: { totalBlogs: 1 },
+    },
+  );
+
+  await UserModel.updateOne(
+    { _id: userId },
+    { $push: { blogs: { blogId: newBlog._id } } },
+  );
+
+  //   let newBlog = new BlogModel({ title, description, category, tags });
+  //   let savedBlog = await newBlog.save();
+  //   console.log("savedBlog: ", savedBlog);
 
   res.status(201).json({
     success: true,
@@ -27,6 +48,8 @@ export const addBlog = asyncHandler(async (req, res, next) => {
     payload: newBlog,
   });
 });
+
+
 
 
 /* 
