@@ -1,13 +1,15 @@
-import asyncHandler from 'express-async-handler';
-import BlogModel from '../models/Blog.model.js';
-import ErrorResponse from '../utils/ErrorResponse.utils.js';
-import { uploadImage } from '../utils/cloudinary.utils.js';
+import asyncHandler from "express-async-handler";
+import BlogModel from "../models/Blog.model.js";
+import UserModel from "../models/user.model.js";
+import { uploadImage } from "../utils/cloudinary.util.js";
+import ErrorResponse from "../utils/ErrorResponse.util.js";
 
-
-export const addImage = asyncHandler(async (req,res,next) =>{})
-
+// export const addImage = asyncHandler(async (req, res, next) => {
+//   return { secure_url };
+// });
 
 //* Add blog
+
 export const addBlog = asyncHandler(async (req, res, next) => {
   const { title, description, category, tags } = req.body;
   const userId = req.myUser._id;
@@ -50,48 +52,47 @@ export const addBlog = asyncHandler(async (req, res, next) => {
 });
 
 
+//* Gte all blogs
 
-
-/* 
-{
-  fieldname: 'image',
-  originalname: 'user-2.jpg',       
-  encoding: '7bit',
-  mimetype: 'image/jpeg',
-  destination: './public/temp',     
-  filename: '1768463322202----user-2.jpg',
-  path: 'public\\temp\\1768463322202----user-2.jpg',
-  size: 5418
-}
-
-*/
-
-
-
-//* get all blogs
 export const getBlogs = asyncHandler(async (req, res, next) => {
-  let blog = await BlogModel.find();
-  if (blog.length == 0) throw new ErrorResponse("No users found", 404);
-  
+  // let blogs = await BlogModel.find();
+
+  let blogs = await BlogModel.find().populate({
+    path: "createdBy",
+    select: "email name -_id", //? "name -_id"
+  });
+
+  // let blogs = await BlogModel.aggregate([
+  //   {
+  //     $lookup: {
+  //       from: "users",
+  //       foreignField: "_id",
+  //       localField: "createdBy",
+  //       as: "createdBy",
+  //     },
+  //   },
+  //   {
+  //     $project: {
+  //       "createdBy.email": 1,
+  //       title: 1,
+  //       description: 1,
+  //     },
+  //   },
+  // ]);
+
+  if (blogs.length === 0) return next(new ErrorResponse("No Blogs found", 404));
+
   res.status(200).json({
     success: true,
-    message: "All users fetched",
-    payload: blog
-  })
+    message: "Blogs fetched successfully",
+    count: blogs.length,
+    data: blogs,
+  });
 });
 
+//* Get single blog
+export const getBlog = asyncHandler(async (req, res, next) => { });
 
-//* get single blog
-export const getBlog = asyncHandler(async (req, res, next) => {
-  const blogId = req.params.id;
-  
-  if (!blogId) throw new ErrorResponse("Invalid id", 404);
 
-  const blog = await BlogModel.findById(blogId);
-
-  res.status(200).json({
-    success: true,
-    message: "Successfully fetched",
-    blog: blog
-  })
-});
+//* Update the blog
+export const updateBlog = asyncHandler(async (req, res, next) => {});
