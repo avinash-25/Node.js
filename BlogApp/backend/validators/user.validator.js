@@ -3,7 +3,7 @@ import Joi from "joi";
 //! create a layout which will be compared with req.body
 //? order does not matter if we have defined datatypes first
 
-export const userRegisterSchema = Joi.object({
+export const userRegisterSchema = Joi.object({ //? Email, Password, Age is required
   name: Joi.string().min(3).max(49).optional(),
   email: Joi.string().email().required(),
   password: Joi.string().required().min(3).max(50),

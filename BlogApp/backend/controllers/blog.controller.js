@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import BlogModel from "../models/Blog.model.js";
-import UserModel from "../models/user.model.js";
+import UserModel from "../models/User.model.js";
 import { deleteImage, uploadImage } from "../utils/cloudinary.util.js";
 import ErrorResponse from "../utils/ErrorResponse.util.js";
 
@@ -8,6 +8,7 @@ import ErrorResponse from "../utils/ErrorResponse.util.js";
 //   return { secure_url };
 // });
 
+//* Add blog
 export const addBlog = asyncHandler(async (req, res, next) => {
   const { title, description, category, tags } = req.body;
   const userId = req.myUser._id;
@@ -52,6 +53,8 @@ export const addBlog = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+//* Get all blogs
 export const getBlogs = asyncHandler(async (req, res, next) => {
   // let blogs = await BlogModel.find();
 
@@ -88,6 +91,8 @@ export const getBlogs = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+//* Get single blog
 export const getBlog = asyncHandler(async (req, res, next) => {
   const blogId = req.params.id;
 
@@ -106,6 +111,8 @@ export const getBlog = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+//* Update blog details
 export const updateBlogDetails = asyncHandler(async (req, res, next) => {
   let userId = req.myUser._id;
   let blogId = req.params.id;
@@ -128,6 +135,8 @@ export const updateBlogDetails = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+//* Update blog image
 export const updateImage = asyncHandler(async (req, res, next) => {
   let blogId = req.params.id;
   let userId = req.myUser._id;

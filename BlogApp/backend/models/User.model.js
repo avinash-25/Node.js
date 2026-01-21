@@ -76,13 +76,3 @@ let UserModel = mongoose.model("User", userSchema);
 export default UserModel;
 
 //! all the validations are happening at database level
-
-let user = {
-  name: "",
-  email: "",
-  password: "",
-  age: 0,
-  isMarried: false,
-  totalBlogs: 2,
-  blogs: [{ blogId: "ref" }, { blogId: "ref2" }],
-};

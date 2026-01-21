@@ -3,9 +3,9 @@ import UserModel from "../models/User.model.js";
 import ErrorResponse from "../utils/ErrorResponse.util.js";
 import { generateJwtToken } from "../utils/jwt.util.js";
 
+
+//* Register user
 export const register = asyncHandler(async (req, res, next) => {
-  // console.log(resp);
-  // return res.status(200).json(resp);
 
   const { name, age, email, isMarried, password } = req.body;
 
@@ -27,16 +27,12 @@ export const register = asyncHandler(async (req, res, next) => {
   });
 });
 
-export const getUsers = async (req, res, next) => {
-  try {
+
+//* Get all users
+export const getUsers = asyncHandler(async (req, res, next) => {
+
     let allUsers = await UserModel.find();
     if (allUsers.length === 0) {
-      // return res.status(404).json({
-      //   success: false,
-      //   message: "No users found",
-      // });
-      // throw new Error("No users found!!!!");
-      // new ErrorResponse("msg", 404)
       throw new ErrorResponse("No users found", 404);
       // {message: "No users found", statusCode: 404}
     }
@@ -47,13 +43,13 @@ export const getUsers = async (req, res, next) => {
       count: allUsers.length,
       data: allUsers,
     });
-  } catch (error) {
-    next(error);
-  }
-};
 
-export const getUser = async (req, res, next) => {
-  try {
+  });
+
+
+//* Get single user
+export const getUser = asyncHandler(async (req, res, next) => {
+
     let userId = req.params.id;
     // let user = await UserModel.findOne({ _id: userId });
     let user = await UserModel.findById(userId);
@@ -69,14 +65,13 @@ export const getUser = async (req, res, next) => {
       message: "User fetched successfully",
       data: user,
     });
-  } catch (error) {
-    next(error);
-  }
-};
+  });
+
+
 
 //* Update user
-export const updateUser = async (req, res, next) => {
-  try {
+export const updateUser = asyncHandler(async (req, res, next) => {
+
     let userId = req.params.id;
     let updatedUser = await UserModel.findByIdAndUpdate(userId, req.body, {
       new: true, // display the updated document
@@ -94,12 +89,12 @@ export const updateUser = async (req, res, next) => {
       message: "User updated successfully",
       data: updatedUser,
     });
-  } catch (error) {
-    next(error);
-  }
-};
 
-export const deleteUser = async (req, res, next) => {
+  });
+
+
+//* Delete user
+export const deleteUser = asyncHandler(async (req, res, next) => {
   let userId = req.params.id;
   let deletedUser = await UserModel.findByIdAndDelete(userId);
 
@@ -114,8 +109,10 @@ export const deleteUser = async (req, res, next) => {
     message: "User deleted successfully",
     data: deletedUser,
   });
-};
+})
 
+
+//* Login user
 export const login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -144,9 +141,11 @@ export const login = asyncHandler(async (req, res, next) => {
   //? sign(payload, secret_key, options)
 });
 
+
+//* Logout user
 export const logout = asyncHandler(async (req, res, next) => {
   res.clearCookie("token", {
-    /* TODO:  
+    /* TODO:
     ! will be using while deploying --> options
     */
   });
@@ -157,6 +156,11 @@ export const logout = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+//! Protected routes controllers
+
+
+//* Get profile
 export const getProfile = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
@@ -165,10 +169,14 @@ export const getProfile = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+//* Update profile
 export const updateProfile = asyncHandler(async (req, res, next) => {
   // req.myUser
 });
 
+
+//* Delete profile
 export const deleteProfile = asyncHandler(async (req, res, next) => {
   // req.myUser
 });

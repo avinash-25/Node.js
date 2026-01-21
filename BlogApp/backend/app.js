@@ -26,9 +26,6 @@ app.use(cookieParser());
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/blogs", blogRoutes);
 
-app.get("/", (req, res) => {
-  res.send("working");
-});
 
 //! error middleware
 app.use(errorHandler);
