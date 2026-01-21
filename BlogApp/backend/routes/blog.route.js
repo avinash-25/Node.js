@@ -12,7 +12,7 @@ router.post("/add", authenticate, validateBody(addBlogSchema), upload.single("im
 
 router.get("/all", getBlogs);
 
-router.patch("/edit-blog/:id", authenticate, validateBody(updateBlogSchema), updateBlogDetails);
+router.patch("/edit-blog/:id", authenticate, validateBody(updateBlogSchema), upload.none(), updateBlogDetails);
 
 router.patch("/edit-image/:id", authenticate, upload.single("image"), updateImage,);
 

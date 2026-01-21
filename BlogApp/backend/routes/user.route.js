@@ -6,7 +6,7 @@
 
 import { Router } from "express";
 
-import { deleteUser, getProfile, getUser, getUsers, login, logout, register, updateUser } from "../controllers/user.controller.js";
+import{deleteUser,getProfile, getUser, getUsers, login, logout, register, updateUser } from "../controllers/user.controller.js";
 
 import { authenticate } from "../middlewares/auth.middleware.js";
 import { validateBody } from "../middlewares/validate.middleware.js";
