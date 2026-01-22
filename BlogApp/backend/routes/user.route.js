@@ -15,7 +15,7 @@ import { loginUserSchema, updatedUserSchema, userRegisterSchema } from "../valid
 const router = Router();
 
 
-router.post("/register", validateBody(userRegisterSchema), register);
+router.post("/register", validateBody(userRegisterSchema), register); //? done
 
 router.get("/all", getUsers); //TODO:
 
@@ -25,7 +25,7 @@ router.patch("/update/:id", validateBody(updatedUserSchema), updateUser); //TODO
 
 router.delete("/delete/:id", deleteUser); //TODO:
 
-router.post("/login", validateBody(loginUserSchema), login);
+router.post("/login", validateBody(loginUserSchema), login); //? done
 
 router.post("/logout", authenticate, logout);
 

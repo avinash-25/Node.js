@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addBlog, getBlog, getBlogs, updateBlogDetails, updateImage, } from "../controllers/blog.controller.js";
+import { addBlog, generateDescription, getBlog, getBlogs, updateBlogDetails, updateImage, } from "../controllers/blog.controller.js";
 import { authenticate } from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/multer.middleware.js";
 import { validateBody } from "../middlewares/validate.middleware.js";
@@ -15,6 +15,8 @@ router.get("/all", getBlogs);
 router.patch("/edit-blog/:id", authenticate, validateBody(updateBlogSchema), upload.none(), updateBlogDetails);
 
 router.patch("/edit-image/:id", authenticate, upload.single("image"), updateImage,);
+
+router.post("/generate-description", generateDescription);
 
 router.get("/:id", getBlog);
 

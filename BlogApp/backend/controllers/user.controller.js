@@ -8,11 +8,6 @@ import { generateJwtToken } from "../utils/jwt.util.js";
 export const register = asyncHandler(async (req, res, next) => {
 
   const { name, age, email, isMarried, password } = req.body;
-
-  // let salt = await bcryptjs.genSalt(10);
-  // let hashedPassword = await bcryptjs.hash(password, salt);
-  // //? this is a one way hashing
-
   let newUser = await UserModel.create({
     name,
     age,
@@ -78,11 +73,7 @@ export const updateUser = asyncHandler(async (req, res, next) => {
       runValidators: true, // to validate the updated data
     });
 
-    if (!updatedUser)
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
+    if (!updatedUser) return next( new ErrorResponse("User Not Found", 404));
 
     res.status(200).json({
       success: true,
