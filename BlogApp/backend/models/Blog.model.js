@@ -28,15 +28,7 @@ const blogSchema = new mongoose.Schema(
     }, //? data buckets --> url(string) imageKit, aws, (cloudinary) req.file
     category: {
       type: String,
-      enum: [
-        "science",
-        "education",
-        "sports",
-        "gaming",
-        "books",
-        "foods",
-        "travel",
-      ],
+      enum: ["science", "education", "sports", "gaming", "books", "foods", "travel",],
       required: true,
     },
     tags: {

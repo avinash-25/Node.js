@@ -35,7 +35,7 @@ export const addBlog = asyncHandler(async (req, res, next) => {
 
   // if (req.file) {
   //   let resp = await uploadImage(req?.file?.path);
-  //
+
   //   secure_url = resp?.secure_url;
   //   public_id = resp?.public_id;
   // }

@@ -10,7 +10,7 @@ export const authenticate = async (req, res, next) => {
     return next(new ErrorResponse("Please Login to access this resource", 401)); //? unauthorized
 
   let decodedToken = jwt.verify(token, JWT_SECRET_KEY);
-  // console.log("decodedToken: ", decodedToken); //? {iat:, exp:, id:"12bytes"}
+  // console.log("decodedToken: ", decodedToken); //? {name:, iat:, exp:, id:"12bytes"}
 
   let user = await UserModel.findOne({ name: decodedToken.name });
   if (!user) return next(new ErrorResponse("Invalid Session", 401));

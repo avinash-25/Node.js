@@ -5,18 +5,8 @@ export const addBlogSchema = Joi.object({
   description: Joi.string().required().trim(),
   category: Joi.string()
     .required()
-    .valid(
-      "science",
-      "education",
-      "sports",
-      "gaming",
-      "books",
-      "foods",
-      "travel",
-    )
-    .messages({
-      "any.only": "not valid",
-    }),
+    .valid("science", "education", "sports", "gaming", "books", "foods", "travel",)
+    .messages({ "any.only": "not valid", }),
   tags: Joi.string().optional(),
 });
 
@@ -26,17 +16,7 @@ export const updateBlogSchema = Joi.object({
   category: Joi.string()
     .required()
     .optional()
-    .valid(
-      "science",
-      "education",
-      "sports",
-      "gaming",
-      "books",
-      "foods",
-      "travel",
-    )
-    .messages({
-      "any.only": "not valid",
-    }),
+    .valid("science", "education", "sports", "gaming", "books", "foods", "travel")
+    .messages({"any.only": "not valid"}),
   tags: Joi.string().optional(),
 }).min(1);

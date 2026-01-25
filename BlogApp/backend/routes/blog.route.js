@@ -8,7 +8,7 @@ import { addBlogSchema, updateBlogSchema, } from "../validators/blog.validator.j
 
 const router = Router();
 
-router.post("/add", authenticate, validateBody(addBlogSchema), upload.single("image"), addBlog,);
+router.post("/add", authenticate, upload.single("image"),validateBody(addBlogSchema), addBlog,);
 
 router.get("/all", getBlogs);
 

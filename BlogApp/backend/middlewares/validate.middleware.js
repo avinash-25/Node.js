@@ -8,7 +8,8 @@ export const validateBody = (schema) => {
 
     if (error) {
       let message = error.details.map((err) => err.message).join(", ");
-      throw new ErrorResponse(message, 400);
+      // throw new ErrorResponse(message, 400);
+      return next(new ErrorResponse(message, 400))
     }
 
     req.body = value;

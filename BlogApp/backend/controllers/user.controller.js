@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import UserModel from "../models/User.model.js";
 import ErrorResponse from "../utils/ErrorResponse.util.js";
 import { generateJwtToken } from "../utils/jwt.util.js";
+import bcrypt from "bcryptjs";
 
 
 //* Register user
@@ -110,8 +111,8 @@ export const login = asyncHandler(async (req, res, next) => {
   let existingUser = await UserModel.findOne({ email });
   if (!existingUser) throw new ErrorResponse("Invalid Credentials", 404);
 
-  // let isMatched = await bcryptjs.compare(password, existingUser.password);
-  let isMatched = await existingUser.comparePassword(password);
+  let isMatched = await bcrypt.compare(password, existingUser.password);
+  // let isMatched = await existingUser.comparePassword(password);
   if (!isMatched) return next(new ErrorResponse("Invalid credentials", 400));
 
   let token = generateJwtToken(existingUser.name);
