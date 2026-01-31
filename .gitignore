@@ -3,6 +3,3 @@ chatApp
 .vscode
 .DS_Store
 node_modules
-package.json
-script.js
-package-lock.json
